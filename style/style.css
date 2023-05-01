@@ -1,7 +1,10 @@
 #keyboard {
+    margin-top: 50px;
     display: block;
-    border: 2px solid black;
+    border: 1px solid black;
     padding: 5px;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 #keyboard::after {
@@ -14,6 +17,10 @@
     width: 50px;
     height: 50px;
     border: 1px solid black;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 3px;
     padding: 3px;
     float: left;
@@ -31,5 +38,17 @@
 
 .container {
     width: 860px;
+    margin:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: 0 auto;
+    padding: 5px;
 }
