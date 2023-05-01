@@ -51,23 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', (event) => {
       const pressedKey = event.keyCode;
       if (keyArray.includes(pressedKey)) {
-        const keyElements = document.querySelectorAll(`#keyboard .key[data="${pressedKey}"]`);
-        keyElements.forEach((keyElement) => {
-          keyElement.classList.add('active');
-        });
+        const keyElement = document.querySelector(`#keyboard .key[data="${pressedKey}"]`);
+        keyElement.classList.add('active');
         textArea.focus();
       }
     });
-
+    
     window.addEventListener('keyup', (event) => {
       const releasedKey = event.keyCode;
       if (keyArray.includes(releasedKey)) {
-        const keyElements = document.querySelectorAll(`#keyboard .key[data="${releasedKey}"]`);
-        keyElements.forEach((keyElement) => {
-          keyElement.classList.remove('active');
-        });
+        const keyElement = document.querySelector(`#keyboard .key[data="${releasedKey}"]`);
+        keyElement.classList.remove('active');
         textArea.focus();
       }
     });
+    
   });
 });
