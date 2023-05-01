@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function initKeys() {
     let out = '';
     for (let i = 0; i < keyArray.length; i++) {
-      if (i === 13 || i === 37 || i === 13) {
+      if (i === 13 || i === 37) {
         out += '<div class="clearfix"></div>';
       }
       out += `<div class="key" data="${keyArray[i]}">${String.fromCharCode(keyArray[i])}</div>`;
@@ -28,25 +28,46 @@ document.addEventListener('DOMContentLoaded', () => {
     initKeys();
   }
 
-  document.addEventListener('keydown', (event) => {
-    console.log(event.code);
-    console.log(event.key);
-    document.querySelectorAll('#keyboard .key').forEach((element) => {
-      element.classList.remove('active');
-    });
-    const keyElement = keyboardElement.querySelector(`.key[data="${event.key}"]`);
-    if (keyElement) {
-      keyElement.classList.add('active');
-    }
-  });
-  
   document.querySelectorAll('#keyboard .key').forEach((element) => {
-    element.onclick = (event) => {
-      document.querySelectorAll('#keyboard .key').forEach((element) => {
-        element.classList.remove('active');
-      });
+    element.addEventListener('mousedown', (event) => {
       const code = element.getAttribute('data');
       element.classList.add('active');
-    }
+      textArea.value += String.fromCharCode(code);
+      textArea.focus();
+    });
+
+    element.addEventListener('mouseup', (event) => {
+      element.classList.remove('active');
+      textArea.focus();
+    });
+
+    element.addEventListener('touchstart', (event) => {
+      const code = element.getAttribute('data');
+      element.classList.add('active');
+      textArea.value += String.fromCharCode(code);
+      textArea.focus();
+    });
+
+    window.addEventListener('keydown', (event) => {
+      const pressedKey = event.keyCode;
+      if (keyArray.includes(pressedKey)) {
+        const keyElements = document.querySelectorAll(`#keyboard .key[data="${pressedKey}"]`);
+        keyElements.forEach((keyElement) => {
+          keyElement.classList.add('active');
+        });
+        textArea.focus();
+      }
+    });
+
+    window.addEventListener('keyup', (event) => {
+      const releasedKey = event.keyCode;
+      if (keyArray.includes(releasedKey)) {
+        const keyElements = document.querySelectorAll(`#keyboard .key[data="${releasedKey}"]`);
+        keyElements.forEach((keyElement) => {
+          keyElement.classList.remove('active');
+        });
+        textArea.focus();
+      }
+    });
   });
 });
