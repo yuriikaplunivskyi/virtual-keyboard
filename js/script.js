@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function initKeys() {
     let out = '';
     for (let i = 0; i < keyArray.length; i++) {
-      if(i == 13 || i == 37 || i == 13) {
-        out += '<div class="clearfix"></div>'
+      if (i === 13 || i === 37 || i === 13) {
+        out += '<div class="clearfix"></div>';
       }
       out += `<div class="key" data="${keyArray[i]}">${String.fromCharCode(keyArray[i])}</div>`;
     }
@@ -28,12 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
     initKeys();
   }
 
-  document.addEventListener('keypress', (event) => {
+  document.addEventListener('keydown', (event) => {
     console.log(event.code);
-    console.log(event.keyCode);
+    console.log(event.key);
     document.querySelectorAll('#keyboard .key').forEach((element) => {
       element.classList.remove('active');
     });
-    keyboardElement.querySelector(`.key[data="${event.keyCode}"]`).classList.add('active');
+    const keyElement = keyboardElement.querySelector(`.key[data="${event.key}"]`);
+    if (keyElement) {
+      keyElement.classList.add('active');
+    }
+  });
+  
+  document.querySelectorAll('#keyboard .key').forEach((element) => {
+    element.onclick = (event) => {
+      document.querySelectorAll('#keyboard .key').forEach((element) => {
+        element.classList.remove('active');
+      });
+      const code = element.getAttribute('data');
+      element.classList.add('active');
+    }
   });
 });
