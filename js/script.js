@@ -16,14 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if(i == 13 || i == 37 || i == 13) {
         out += '<div class="clearfix"></div>'
       }
-      out += '<div class="key">' + String.fromCharCode(keyArray[i]) + '</div>';
+      out += `<div class="key" data="${keyArray[i]}">${String.fromCharCode(keyArray[i])}</div>`;
     }
     document.querySelector('#keyboard').innerHTML = out;
   }
 
-  if (!document.getElementById('keyboard')) {
+  const keyboardElement = document.getElementById('keyboard');
+  if (!keyboardElement) {
     console.error('Keyboard element not found');
   } else {
     initKeys();
   }
+
+  document.addEventListener('keypress', (event) => {
+    console.log(event.code);
+    console.log(event.keyCode);
+    document.querySelectorAll('#keyboard .key').forEach((element) => {
+      element.classList.remove('active');
+    });
+    keyboardElement.querySelector(`.key[data="${event.keyCode}"]`).classList.add('active');
+  });
 });
